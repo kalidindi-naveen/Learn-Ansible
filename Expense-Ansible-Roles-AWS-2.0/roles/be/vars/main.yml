@@ -1,0 +1,6 @@
+LOGIN_HOST: db.step-into-iot.cloud
+DB_HOST: db.step-into-iot.cloud
+LOGIN_USER: root
+PASSWORD: ExpenseApp@1
+APP_LOCATION: /app
+COMPONENT: backend

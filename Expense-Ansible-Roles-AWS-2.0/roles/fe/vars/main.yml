@@ -1,0 +1,3 @@
+BE_API_URL: be.step-into-iot.cloud
+APP_LOCATION: /usr/share/nginx/html
+COMPONENT: frontend

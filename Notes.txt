@@ -1,0 +1,30 @@
+----------------
+adhoc commands |
+----------------
+ansible -i 10.128.15.213, all -m ping -u naveen --private-key=naveen.pem
+
+ansible -i 10.128.15.213, all -u naveen --private-key=naveen.pem -b -m apt -a "name=nginx state=present"
+
+ansible -i db.step-into-iot.space, all -u naveen --private-key=naveen.pem -m ping
+
+------------------
+ansible-playbook |
+------------------
+ansible-playbook -i inventory.ini -u naveen --private-key=naveen.pem 1.ping.yml 
+
+ansible-playbook -i inventory.ini -u naveen --private-key=naveen.pem 9.vars-arg.yml -e PERSON="NK" -e WISHES="GM"
+
+ansible -i db.step-into-iot.cloud, all -e ansible_user=ec2-user -e ansible_password=DevOps321 -m ping
+
+ansible -i 172.31.18.1, all -e ansible_user=ec2-user -e ansible_password=DevOps321 -m ping
+
+ansible-playbook -i inventory.ini -e ansible_user=ec2-user -e ansible_password=DevOps321 ping.yml
+
+-------
+MySql |
+-------
+- Connect to MySql
+mysql -u root -h db.step-into-iot.space -p 'ExpenseApp@1'
+
+- Set Root Password
+mysqladmin -u root password 'ExpenseApp@1' -h db.step-into-iot.space

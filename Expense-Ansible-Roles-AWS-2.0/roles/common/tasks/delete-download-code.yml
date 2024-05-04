@@ -1,0 +1,20 @@
+- name: Delete {{APP_LOCATION}} Directory
+  ansible.builtin.file:
+    path: "{{APP_LOCATION}}"
+    state: absent
+
+- name: Create {{APP_LOCATION}} Directory
+  ansible.builtin.file:
+    path: "{{APP_LOCATION}}"
+    state: directory
+
+- name: Download {{COMPONENT}} code
+  ansible.builtin.get_url:
+    url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-{{COMPONENT}}-v2.zip
+    dest: /tmp/{{COMPONENT}}.zip
+
+- name: unzip {{COMPONENT}} code
+  ansible.builtin.unarchive:
+    src: /tmp/{{COMPONENT}}.zip # by default checks in ansible server
+    dest: "{{APP_LOCATION}}"
+    remote_src: yes
