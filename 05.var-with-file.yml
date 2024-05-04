@@ -1,0 +1,8 @@
+- name: Play1
+  hosts: web
+  vars_files:
+    - var-file.yml
+  tasks:
+  - name: Say Hi From Web
+    ansible.builtin.debug:
+      msg: "I'm {{NAME}} with Age:{{AGE}}"

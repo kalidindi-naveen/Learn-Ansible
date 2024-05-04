@@ -1,0 +1,33 @@
+- name: Setup MySql
+  hosts: db
+  become: yes
+  vars:
+    LOGIN_HOST: db.step-into-iot.space
+  vars_prompt:
+  - name: PASSWORD
+    prompt: Enter PASSWORD
+    private: true
+  tasks:
+  - name: Install MySql-Server
+    ansible.builtin.dnf:
+      name: mysql-server
+      state: latest
+
+  - name: Enable & Start MySql-Server
+    ansible.builtin.service:
+      name: mysqld
+      state: started
+      enabled: yes
+
+  - name: Check DB Connection
+    ansible.builtin.shell: "mysql -u root -p '{{ PASSWORD }}' -h {{LOGIN_HOST}}"
+    ignore_errors: yes
+    register: mysql_connection_output
+
+  - name: Print Output
+    ansible.builtin.debug:
+      msg: "Output: {{mysql_connection_output}}"
+
+  - name: setup root password
+    ansible.builtin.command: "mysqladmin -u root password '{{ PASSWORD }}'"
+    when: mysql_connection_output.failed is true # don't give {{ }} in when condition

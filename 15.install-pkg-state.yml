@@ -1,0 +1,11 @@
+- name: install packages
+  hosts: web
+  become: yes
+  tasks:
+  - name: install packages
+    ansible.builtin.apt:
+      name: "{{ item.name }}"
+      state: "{{ item.state }}"
+    loop: 
+    - { name: 'nginx', state: 'absent'} # item
+    - { name: 'postfix', state: 'absent'}

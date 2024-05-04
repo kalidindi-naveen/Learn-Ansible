@@ -1,0 +1,20 @@
+- name: Conditions
+  become: true
+  hosts: web
+  tasks:
+  - name: Check user exists or not
+    ansible.builtin.command: id nk
+    ignore_errors: true
+    register: USER
+
+  - name: Print user info
+    ansible.builtin.debug:
+      msg: "User info: {{USER}}"
+  
+  - name: create user
+    ansible.builtin.command: useradd nk
+    when: USER.rc != 0 #condition
+
+  - name: say Hello
+    ansible.builtin.debug:
+      msg: "Hello"

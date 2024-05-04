@@ -1,0 +1,13 @@
+- name: Play1
+  hosts: web
+  vars_prompt:
+  - name: NAME
+    prompt: Enter NAME
+    private: false
+  - name: AGE
+    prompt: Enter AGE
+    private: true
+  tasks:
+  - name: Say Hi From Web
+    ansible.builtin.debug:
+      msg: "I'm {{NAME}} with Age:{{AGE}}"

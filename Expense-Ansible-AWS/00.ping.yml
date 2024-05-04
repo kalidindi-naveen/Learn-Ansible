@@ -1,0 +1,8 @@
+- name: Ping VM's
+  hosts:
+  - db
+  - be 
+  - fe 
+  tasks:
+  - name: ping VM's
+    ansible.builtin.ping:

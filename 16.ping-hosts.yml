@@ -1,0 +1,8 @@
+- name: Ping Group's
+  hosts:
+    - db
+    - be
+    - fe
+  tasks:
+  - name: ping group's
+    ansible.builtin.ping:

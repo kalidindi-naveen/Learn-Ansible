@@ -1,0 +1,13 @@
+- name: Play1
+  hosts: web
+  tasks:
+  - name: Say Hi From Web
+    ansible.builtin.debug:
+      msg: "Hi From Web Group"
+
+- name: Play2
+  hosts: localhost
+  tasks:
+  - name: Say Hi From Localhost
+    ansible.builtin.debug:
+      msg: "Hi From localhost"

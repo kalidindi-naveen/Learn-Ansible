@@ -1,0 +1,23 @@
+- name: Install MySql-Server
+  ansible.builtin.dnf:
+    name: mysql-server
+    state: latest
+
+- name: Enable & Start MySql-Server
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: Attempt to login to MySQL
+  ansible.builtin.command: mysql -u root -p'{{ PASSWORD }}' -e 'SELECT User, Host, authentication_string FROM mysql.user;'
+  register: login_output
+  ignore_errors: yes
+
+- name: Print Output
+  ansible.builtin.debug:
+    msg: "Output: {{login_output}}"
+
+- name: setup root password
+  ansible.builtin.command: "mysql_secure_installation --set-root-pass {{PASSWORD}}"
+  when: login_output.failed # don't give {{ }} in when condition

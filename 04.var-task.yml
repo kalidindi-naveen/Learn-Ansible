@@ -1,0 +1,11 @@
+- name: Play1
+  hosts: web
+  vars:
+    NAME: "Naveen"
+    AGE: 23
+  tasks:
+  - name: Say Hi From Web
+    vars:
+      AGE: 18
+    ansible.builtin.debug:
+      msg: "I'm {{NAME}} with Age:{{AGE}}"
