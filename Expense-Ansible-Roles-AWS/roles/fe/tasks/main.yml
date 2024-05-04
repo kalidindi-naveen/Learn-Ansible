@@ -1,0 +1,34 @@
+- name: Install Nginx 
+  ansible.builtin.dnf:
+    name: nginx
+    state: present
+
+- name: Start Nginx & Enable
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Download Frontend code
+  ansible.builtin.get_url:
+    url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+    dest: /tmp/frontend.zip
+
+- name: unzip Frontend code
+  ansible.builtin.unarchive:
+    src: /tmp/frontend.zip # by default checks in ansible server
+    dest: /usr/share/nginx/html
+    remote_src: yes
+
+# if there is change in configuration only, then you need to restart nginx
+- name: copy backend conf
+  ansible.builtin.template:
+    src: expense.conf.j2
+    dest: /etc/nginx/default.d/expense.conf
+  notify:
+  - Restart Nginx
+
+# - name: Restart Nginx
+#   ansible.builtin.service:
+#     name: nginx
+#     state: restarted

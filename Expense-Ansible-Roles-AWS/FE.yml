@@ -1,0 +1,5 @@
+- name: Configure FE Server
+  hosts: fe
+  become: yes
+  roles: 
+  - fe
