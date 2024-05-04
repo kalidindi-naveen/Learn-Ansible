@@ -10,3 +10,8 @@ ansible-inventory -i aws_ec2.yml --graph
 Install Package in EC2 Servers
 ------------------------------
 ansible-playbook -i aws_ec2.yml -e ansible_user=ec2-user -e ansible_password=DevOps321 dynamic.yml
+
+
+Create Instances in AWS -- Don't have state management in Ansible 
+-----------------------------------------------------------------
+ansible-playbook expense_aws.yml
