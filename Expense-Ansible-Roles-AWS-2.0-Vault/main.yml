@@ -1,0 +1,7 @@
+- name: Configure {{SERVER}} Server
+  hosts: "{{SERVER}}"
+  become: yes
+  vars_files:
+  - cred.yml
+  roles: 
+  - "{{SERVER}}"

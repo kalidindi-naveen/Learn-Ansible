@@ -1,0 +1,3 @@
+ansible-playbook main.yml -e SERVER=db
+ansible-playbook main.yml -e SERVER=be
+ansible-playbook main.yml -e SERVER=fe

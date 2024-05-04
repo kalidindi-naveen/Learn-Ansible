@@ -1,0 +1,3 @@
+ansible-vault create cred.yml
+ansible-vault view cred.yml 
+ansible-vault edit cred.yml
