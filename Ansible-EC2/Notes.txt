@@ -1,0 +1,12 @@
+create IAM User -- Admin Access
+
+aws configure -- Ansible-Server
+
+Fetch EC2 Details using Ansible
+-------------------------------
+ansible-inventory -i aws_ec2.yml --graph
+
+
+Install Package in EC2 Servers
+------------------------------
+ansible-playbook -i aws_ec2.yml -e ansible_user=ec2-user -e ansible_password=DevOps321 dynamic.yml
