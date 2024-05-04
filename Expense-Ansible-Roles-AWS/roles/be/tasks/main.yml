@@ -1,0 +1,56 @@
+- name: Disable Default NodeJS
+  ansible.builtin.command: dnf module disable nodejs -y
+
+- name: Enable NodeJS 20
+  ansible.builtin.command: dnf module enable nodejs:20 -y
+
+- name: Install NodeJS 20 & MySql
+  ansible.builtin.dnf:
+    name: "{{item}}"
+    state: present
+  loop:
+  - nodejs
+  - mysql
+
+- name: Create User
+  ansible.builtin.user:
+    name: expense
+
+- name: Create App Directory
+  ansible.builtin.file:
+    path: /app
+    state: directory
+
+- name: Download backend code
+  ansible.builtin.get_url:
+    url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+    dest: /tmp/backend.zip
+
+- name: unzip backend code
+  ansible.builtin.unarchive:
+    src: /tmp/backend.zip # by default checks in ansible server
+    dest: /app
+    remote_src: yes
+
+- name: Install npm dependencies
+  ansible.builtin.command: npm install
+  args:
+    chdir: /app
+
+- name: Copy backend service
+  ansible.builtin.template:
+    src: backend.service.j2
+    dest: /etc/systemd/system/backend.service
+
+- name: Import data into mysql
+  ansible.builtin.shell: mysql -h {{LOGIN_HOST}} -u{{LOGIN_USER}} -p{{PASSWORD}} < /app/schema/backend.sql
+
+- name: Daemon reload
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Start and Enable Backend Service
+  ansible.builtin.service:
+    name: backend
+    state: started
+    enabled: yes

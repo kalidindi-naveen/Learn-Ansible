@@ -1,0 +1,5 @@
+- name: Configure DE Server
+  hosts: be
+  become: yes
+  roles: 
+  - be
